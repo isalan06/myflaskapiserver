@@ -56,7 +56,7 @@ def GDA_UpdateRegularImage():
             #print(cred_folderString)
             cred_filenameString = os.path.join(os.sep, cred_folderString, 'token.json')
             #print(cred_filenameString)
-            clientcred_filenameString = os.path.join(so.sep, cred_folderString ,'client_secrets.json')
+            clientcred_filenameString = os.path.join(os.sep, cred_folderString ,'client_secrets.json')
 
             creds = None
 
