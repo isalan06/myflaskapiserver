@@ -34,7 +34,8 @@ def GDA_UpdateRegularImage():
     if not os.path.isdir(timeFolderString):
         os.mkdir(timeFolderString)
 
-    f = request.files['file']
+    f = request.files.getlist()
+    print(f)
 
     res = {}
     res['result']='success'
