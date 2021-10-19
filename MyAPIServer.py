@@ -44,8 +44,17 @@ def GDA_UpdateRegularImage():
 
     image_code = getUpdateGDImageCode(_sn)
     if image_code != '':
-        print(os.path.abspath(os.path.dirname(__file__)))
-
+        try:
+            cred_folderString = os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), 'iotgwgoogledrive')
+            print(cred_folderString)
+            cred_filenameString = os.path.join(os.sep, cred_folderString, 'token.json')
+            print(cred_filenameString)
+        except Exception as ex:
+            print(ex)
+            res2 = {}
+            res2['result']='failure'
+            res2['errcode']='Update Image To Google Drive happen error:' + str(ex)
+            return jsonify(res2)
     res = {}
     res['result']='success'
     res['errcode']=''
