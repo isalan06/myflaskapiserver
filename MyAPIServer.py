@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import asyncio
 
 app = Flask(__name__)
 
@@ -14,10 +15,15 @@ def GoogleDriveAPIFun():
 def GDA_UpdateRegularImage():
     print('Update Regular Image')
 
+    SaveImage()
+
     res = {}
-    res['result']='Success'
+    res['result']='success'
     res['errcode']=''
     return jsonify(res)
+
+async def SaveImage():
+    print('Save Image')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
