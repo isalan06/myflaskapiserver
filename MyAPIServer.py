@@ -13,8 +13,13 @@ def GoogleDriveAPIFun():
 @app.route('/GoogleDriveAPI/UpdateRegularImage', methods=['POST'])
 def GDA_UpdateRegularImage():
     print('Update Regular Image')
-    args = request.args
-    print(args)
+    _sn = request.args['sn']
+    _filename= request.args['filename']
+    _datetime = request.args['datetime']
+    print(_sn)
+    print(_filename)
+    print(_datetime)
+
     res = {}
     res['result']='success'
     res['errcode']=''
