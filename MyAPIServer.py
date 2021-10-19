@@ -23,7 +23,16 @@ def GDA_UpdateRegularImage():
     
     baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'IoTGateway', str(_sn))
     print(baseFolderString) 
-    #if not os.path.isdir(baseFolderString):
+    if not os.path.isdir(baseFolderString):
+        os.mkdir(baseFolderString)
+    imageFolderString = os.path.join(os.sep, baseFolderString, 'Image')
+    print(imageFolderString)
+    if not os.path.isdir(imageFolderString):
+        os.mkdir(imageFolderString)
+    timeFolderString = os.path.join(os.sep, imageFolderString, str(_datetime)[:7])
+    print(timeFolderString)
+    if not os.path.isdir(timeFolderString):
+        os.mkdir(timeFolderString)
 
     res = {}
     res['result']='success'
