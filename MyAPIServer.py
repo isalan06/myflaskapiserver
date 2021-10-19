@@ -74,8 +74,8 @@ def getUpdateGDImageCode(machineid):
 
             if number > 0:
                 data = cursor.fetchone()
-                result = data[0][0]
-                print(data)
+                result = data[0]
+                print(result)
 
 
     except Exception as ex:
