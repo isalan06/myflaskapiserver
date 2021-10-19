@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import os
+import pymysql
 
 app = Flask(__name__)
 
@@ -46,6 +47,33 @@ def GDA_UpdateRegularImage():
     res['errcode']=''
     return jsonify(res)
 
+db_settings = {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "alan",
+    "password": "12345678",
+    "db": "gd_db",
+    "charset": "utf8"
+}
+
+
+def getUpdateGDImageCode(machineid):
+    result = ''
+
+    try:
+        conn = pymysql.connect(**db_settings)
+
+        with conn.cursor() as cursor:
+            command = 'SELECT image_code FROM table_googledrivecode WHERE machine_id = \'' + str(machineid) + '\''
+
+            number = cursor.execute(command)
+            print(number)
+
+
+    except Exception as ex:
+        print(ex)
+
+    return result
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
