@@ -15,7 +15,7 @@ def GoogleDriveAPIFun():
 def GDA_UpdateRegularImage():
     print('Update Regular Image')
 
-    SaveImage()
+    asyncio.create_task(SaveImage())
 
     res = {}
     res['result']='success'
