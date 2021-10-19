@@ -29,10 +29,12 @@ def GDA_UpdateRegularImage():
     print(imageFolderString)
     if not os.path.isdir(imageFolderString):
         os.mkdir(imageFolderString)
-    timeFolderString = os.path.join(os.sep, imageFolderString, str(_datetime)[:7])
+    timeFolderString = os.path.join(os.sep, imageFolderString, str(_datetime)[:8])
     print(timeFolderString)
     if not os.path.isdir(timeFolderString):
         os.mkdir(timeFolderString)
+
+    f = request.files['file']
 
     res = {}
     res['result']='success'
