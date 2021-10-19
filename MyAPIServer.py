@@ -1,6 +1,13 @@
 from flask import Flask, request, jsonify
 import os
 import pymysql
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+
+# If modifying these scopes, delete the file token.json.
+SCOPES = ['https://www.googleapis.com/auth/drive']
 
 app = Flask(__name__)
 
@@ -46,9 +53,50 @@ def GDA_UpdateRegularImage():
     if image_code != '':
         try:
             cred_folderString = os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), 'iotgwgoogledrive')
-            print(cred_folderString)
+            #print(cred_folderString)
             cred_filenameString = os.path.join(os.sep, cred_folderString, 'token.json')
-            print(cred_filenameString)
+            #print(cred_filenameString)
+            clientcred_filenameString = os.path.join(so.sep, cred_folderString ,'client_secrets.json')
+
+            creds = None
+
+            if os.path.exists(cred_filenameString):
+                print("GD1")
+                creds = Credentials.from_authorized_user_file(cred_filenameString, SCOPES)
+            # If there are no (valid) credentials available, let the user log in.
+            if not creds or not creds.valid:
+                print("GD2")
+                if creds and creds.expired and creds.refresh_token:
+                    print("GD3")
+                    creds.refresh(Request())
+                else:
+                    print("GD4")
+                    flow = InstalledAppFlow.from_client_secrets_file(
+                        clientcred_filenameString, SCOPES)
+                    creds = flow.run_local_server(port=0)
+                # Save the credentials for the next run
+                with open(cred_filenameString, 'w') as token:
+                    token.write(creds.to_json())
+
+            service = build('drive', 'v3', credentials=creds)
+
+            folder_id = image_code
+            file_metadata = {
+                'name': _filename,
+                'parents': [folder_id]
+            }
+
+            media = MediaFileUpload(fileString,
+                        mimetype='image/jpeg',
+                        resumable=True)
+            
+            _file = service.files().create(body=saveFileNameString,
+                                    media_body=media,
+                                    fields='id').execute()
+
+            print('Update Image To Google Drive Success')
+
+
         except Exception as ex:
             print(ex)
             res2 = {}
