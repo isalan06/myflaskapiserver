@@ -18,29 +18,31 @@ def GDA_UpdateRegularImage():
     _sn = request.args['sn']
     _filename= request.args['filename']
     _datetime = request.args['datetime']
-    print(_sn)
-    print(_filename)
-    print(_datetime)
+    #print(_sn)
+    #print(_filename)
+    #print(_datetime)
     
     baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'IoTGateway', str(_sn))
-    print(baseFolderString) 
+    #print(baseFolderString) 
     if not os.path.isdir(baseFolderString):
         os.mkdir(baseFolderString)
     imageFolderString = os.path.join(os.sep, baseFolderString, 'Image')
-    print(imageFolderString)
+    #print(imageFolderString)
     if not os.path.isdir(imageFolderString):
         os.mkdir(imageFolderString)
     timeFolderString = os.path.join(os.sep, imageFolderString, str(_datetime)[:8])
-    print(timeFolderString)
+    #print(timeFolderString)
     if not os.path.isdir(timeFolderString):
         os.mkdir(timeFolderString)
     saveFileNameString = os.path.join(os.sep, timeFolderString, _filename)
-    print(saveFileNameString)
+    #print(saveFileNameString)
 
     f = request.data
     #print(f)
     with open(saveFileNameString, "wb") as binary_file:
         binary_file.write(f)
+
+    image_code = getUpdateGDImageCode(_sn)
 
     res = {}
     res['result']='success'
@@ -65,6 +67,7 @@ def getUpdateGDImageCode(machineid):
 
         with conn.cursor() as cursor:
             command = 'SELECT image_code FROM table_googledrivecode WHERE machine_id = \'' + str(machineid) + '\''
+            print(command)
 
             number = cursor.execute(command)
             print(number)
