@@ -34,7 +34,7 @@ def GDA_UpdateRegularImage():
     if not os.path.isdir(timeFolderString):
         os.mkdir(timeFolderString)
 
-    f = request.files.getlist('file')
+    f = request.data
     print(f)
 
     res = {}
