@@ -87,11 +87,11 @@ def GDA_UpdateRegularImage():
                 'parents': [folder_id]
             }
 
-            media = MediaFileUpload(fileString,
+            media = MediaFileUpload(saveFileNameString,
                         mimetype='image/jpeg',
                         resumable=True)
             
-            _file = service.files().create(body=saveFileNameString,
+            _file = service.files().create(body=file_metadata,
                                     media_body=media,
                                     fields='id').execute()
 
