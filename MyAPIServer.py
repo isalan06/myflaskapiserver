@@ -33,9 +33,13 @@ def GDA_UpdateRegularImage():
     print(timeFolderString)
     if not os.path.isdir(timeFolderString):
         os.mkdir(timeFolderString)
+    saveFileNameString = os.path.join(os.sep, timeFolderString, _filename)
+    print(saveFileNameString)
 
     f = request.data
-    print(f)
+    #print(f)
+    with open(saveFileNameString, "wb") as binary_file:
+        binary_file.write(f)
 
     res = {}
     res['result']='success'
