@@ -12,7 +12,7 @@ def GoogleDriveAPIFun():
     return "Google Drive API"
 
 @app.route('/GoogleDriveAPI/UpdateRegularImage')
-def GDA_UpdateRegularImage():
+async def GDA_UpdateRegularImage():
     print('Update Regular Image')
 
     await SaveImage()
