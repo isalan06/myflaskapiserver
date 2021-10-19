@@ -43,6 +43,8 @@ def GDA_UpdateRegularImage():
         binary_file.write(f)
 
     image_code = getUpdateGDImageCode(_sn)
+    if image_code != '':
+        print(os.path.abspath(os.path.dirname(__file__)))
 
     res = {}
     res['result']='success'
@@ -67,17 +69,15 @@ def getUpdateGDImageCode(machineid):
 
         with conn.cursor() as cursor:
             command = 'SELECT image_code FROM table_googledrivecode WHERE machine_id = \'' + str(machineid) + '\''
-            print(command)
+            #print(command)
 
             number = cursor.execute(command)
-            print(number)
+            #print(number)
 
             if number > 0:
                 data = cursor.fetchone()
                 result = data[0]
-                print(result)
-
-
+                #print(result)
     except Exception as ex:
         print(ex)
 
