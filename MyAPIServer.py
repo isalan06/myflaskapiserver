@@ -13,14 +13,18 @@ def GoogleDriveAPIFun():
 
 @app.route('/GoogleDriveAPI/UpdateRegularImage')
 def GDA_UpdateRegularImage():
-    print('Update Regular Image')
 
-    SaveImage()
+    response = asyncio.run(UpdateRegularImage)
 
     res = {}
     res['result']='success'
     res['errcode']=''
     return jsonify(res)
+
+async def UpdateRegularImage():
+    print('Update Regular Image')
+    await SaveImage()
+    return True
 
 async def SaveImage():
     print('Save Image')
