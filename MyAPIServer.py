@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -19,6 +20,10 @@ def GDA_UpdateRegularImage():
     print(_sn)
     print(_filename)
     print(_datetime)
+    
+    baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'IoTGateway', str(_sn))
+    print(baseFolderString) 
+    #if not os.path.isdir(baseFolderString):
 
     res = {}
     res['result']='success'
