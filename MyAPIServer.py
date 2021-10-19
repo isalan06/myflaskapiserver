@@ -10,7 +10,7 @@ def index():
 def GoogleDriveAPIFun():
     return "Google Drive API"
 
-@app.route('/GoogleDriveAPI/UpdateRegularImage')
+@app.route('/GoogleDriveAPI/UpdateRegularImage', methods=['POST'])
 def GDA_UpdateRegularImage():
     print('Update Regular Image')
     args = request.args
