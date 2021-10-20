@@ -45,7 +45,7 @@ def main():
     if not items:
         print('No files found.')
     else:
-        print('Files:')
+        print('1st Files:')
         for item in items:
             if item['name']=='KIOSK Picture':
                 pic_id = item['id']
@@ -56,7 +56,14 @@ def main():
         q="mimeType = 'application/vnd.google-apps.folder' and '" + str(pic_id) +"' in parents",
         pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
     items = results.get('files', [])
-
+    if not items:
+        print('No files found.')
+    else:
+        print('2nd Files:')
+        for item in items:
+            #if item['name']=='KIOSK Picture':
+                #pic_id = item['id']
+            print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
 
 
 if __name__ == '__main__':
