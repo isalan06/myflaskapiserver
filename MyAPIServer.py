@@ -62,16 +62,16 @@ def GDA_UpdateRegularImage():
             creds = None
 
             if os.path.exists(cred_filenameString):
-                print("GD1")
+                #print("GD1")
                 creds = Credentials.from_authorized_user_file(cred_filenameString, SCOPES)
             # If there are no (valid) credentials available, let the user log in.
             if not creds or not creds.valid:
-                print("GD2")
+                #print("GD2")
                 if creds and creds.expired and creds.refresh_token:
-                    print("GD3")
+                    #print("GD3")
                     creds.refresh(Request())
                 else:
-                    print("GD4")
+                    #print("GD4")
                     flow = InstalledAppFlow.from_client_secrets_file(
                         clientcred_filenameString, SCOPES)
                     creds = flow.run_local_server(port=0)
