@@ -52,5 +52,13 @@ def main():
             print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
     print(pic_id)
 
+    results = service.files().list(
+        q="mimeType = 'application/vnd.google-apps.folder'",
+        pageSize=10, fields="nextPageToken, files(id, name, parents)",
+        parents=pic_id).execute()
+    items = results.get('files', [])
+
+
+
 if __name__ == '__main__':
     main()
