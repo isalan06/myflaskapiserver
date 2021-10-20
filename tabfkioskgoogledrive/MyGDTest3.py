@@ -46,7 +46,7 @@ def main():
     else:
         print('Files:')
         for item in items:
-            print(u'{0} ({1})'.format(item['name'], item['id'], item['parents']))
+            print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
 
 if __name__ == '__main__':
     main()
