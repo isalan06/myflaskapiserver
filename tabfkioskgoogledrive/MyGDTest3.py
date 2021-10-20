@@ -53,9 +53,8 @@ def main():
     print(pic_id)
 
     results = service.files().list(
-        q="mimeType = 'application/vnd.google-apps.folder'",
-        pageSize=10, fields="nextPageToken, files(id, name, parents)",
-        parents=pic_id).execute()
+        q="mimeType = 'application/vnd.google-apps.folder' and '" + str(pic_id) +"' in parents",
+        pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
     items = results.get('files', [])
 
 
