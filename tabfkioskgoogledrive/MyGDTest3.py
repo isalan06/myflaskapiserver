@@ -40,13 +40,17 @@ def main():
         pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
     items = results.get('files', [])
 
+    pic_id = ''
 
     if not items:
         print('No files found.')
     else:
         print('Files:')
         for item in items:
+            if item['name']=='KIOSK Picture':
+                pic_id = item['id']
             print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
+    print(pic_id)
 
 if __name__ == '__main__':
     main()
