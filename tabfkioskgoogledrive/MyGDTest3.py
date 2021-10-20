@@ -37,7 +37,7 @@ def main():
     # Call the Drive v3 API
     results = service.files().list(
         q="mimeType = 'application/vnd.google-apps.folder'",
-        pageSize=10, fields="nextPageToken, files(id, name, parent)").execute()
+        pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
     items = results.get('files', [])
 
 
@@ -46,7 +46,7 @@ def main():
     else:
         print('Files:')
         for item in items:
-            print(u'{0} ({1})'.format(item['name'], item['id'], item['parent']))
+            print(u'{0} ({1})'.format(item['name'], item['id'], item['parents']))
 
 if __name__ == '__main__':
     main()
