@@ -52,6 +52,8 @@ def main():
             print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
     print(pic_id)
 
+    q_str = "mimeType = 'application/vnd.google-apps.folder' and '" + str(pic_id) +"' in parents"
+    print(q_str)
     results = service.files().list(
         q="mimeType = 'application/vnd.google-apps.folder' and '" + str(pic_id) +"' in parents",
         pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
