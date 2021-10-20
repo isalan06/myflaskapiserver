@@ -58,14 +58,32 @@ def main():
         q="mimeType = 'application/vnd.google-apps.folder' and '" + str(pic_id) +"' in parents",
         pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
     items = results.get('files', [])
+
+    bHasBaseFolder = False
+    sMachineID = 'Kiosk_1'
+    sMachineID_ID = ''
     if not items:
         print('No files found.')
     else:
         print('2nd Files:')
         for item in items:
-            #if item['name']=='KIOSK Picture':
-                #pic_id = item['id']
+            if item['name']==sMachineID:
+                bHasBaseFolder = True
+                sMachineID_ID = item['id']
             print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
+    
+    if bHasBaseFolder == False:
+        file_metadata = {
+            'name': sMachineID,
+            'mimeType': 'application/vnd.google-apps.folder',
+            'parents': [str(pic_id)]
+        }
+        file = drive_service.files().create(body=file_metadata,
+                                    fields='id').execute()
+        sMachineID_ID = str(file.get('id'))
+        print 'Folder ID: %s' % file.get('id')
+
+    print(sMachineID_ID)        
 
 
 if __name__ == '__main__':
