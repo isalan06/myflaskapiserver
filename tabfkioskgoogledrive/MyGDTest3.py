@@ -36,7 +36,7 @@ def main():
 
     # Call the Drive v3 API
     results = service.files().list(
-        q: mimeType = 'application/vnd.google-apps.folder',
+        mimeType = 'application/vnd.google-apps.folder',
         pageSize=10, fields="nextPageToken, files(id, name)").execute()
     items = results.get('files', [])
 
