@@ -34,13 +34,6 @@ def main():
 
     service = build('drive', 'v3', credentials=creds)
 
-    results = service.files().get(
-        q="'root' in parents",
-        fields="files(id)"
-    ).execute()
-    items = results.get('files', [])
-    print(items)
-
     # Call the Drive v3 API
     results = service.files().list(
         q="mimeType = 'application/vnd.google-apps.folder'",
