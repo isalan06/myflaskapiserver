@@ -81,7 +81,7 @@ def main():
         file = drive_service.files().create(body=file_metadata,
                                     fields='id').execute()
         sMachineID_ID = str(file.get('id'))
-        print 'Folder ID: %s' % file.get('id')
+        print('Folder ID: %s' % file.get('id'))
 
     print(sMachineID_ID)        
 
