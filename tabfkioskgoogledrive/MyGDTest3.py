@@ -116,6 +116,35 @@ def main():
         sTodayDate_ID = str(file.get('id'))
         print('Folder ID: %s' % file.get('id'))
 
+    #Check Test Location
+    sTestLocation='我是測試考場(真的是測試用)'
+    sTestLocation_ID = ''
+    bHasBaseFolder = False
+    q_str = "mimeType = 'application/vnd.google-apps.folder' and '" + str(sTodayDate_ID) +"' in parents"
+    results = service.files().list(
+        q=q_str,
+        pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
+    items = results.get('files', [])
+    if not items:
+        print('No files found.')
+    else:
+        print('4nd Files:')
+        for item in items:
+            if item['name']==sTestLocation:
+                bHasBaseFolder = True
+                sTestLocation_ID = item['id']
+            print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
+    if bHasBaseFolder == False:
+        file_metadata = {
+            'name': sTestLocation,
+            'mimeType': 'application/vnd.google-apps.folder',
+            'parents': [str(sTodayDate_ID)]
+        }
+        file = service.files().create(body=file_metadata,
+                                    fields='id').execute()
+        sTestLocation_ID = str(file.get('id'))
+        print('Folder ID: %s' % file.get('id'))
+
 
 if __name__ == '__main__':
     main()
