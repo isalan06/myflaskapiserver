@@ -118,13 +118,15 @@ def TABF_GetGoogleDriveFolderID():
     _testlocation = request.args['TestLocation']
     _result_id = ''
 
-    print(_machineid)
-    print(_testtime)
-    print(_testlocation)
+    _result_id = CheckGoogleDriveFolder(_machineid, _testtime, _testlocation)
 
     res = {}
-    res['result']='success'
-    res['errcode']=''
+    if _result_id == '':
+        res['result']='failure'
+        res['errcode']='Cannot find folder id'
+    else:
+        res['result']='success'
+        res['errcode']=''
     res['folderid']=_result_id
     
     return jsonify(res)
@@ -161,6 +163,61 @@ def getUpdateGDImageCode(machineid):
         print(ex)
 
     return result
+
+def CheckGoogleDriveFolder(machineid, testtime, testlocation):
+    returnfolderid=''
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+
+    creds = None
+    cred_folderString = os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), 'tabfkioskgoogledrive')
+    cred_filenameString = os.path.join(os.sep, cred_folderString, 'token.json')
+    clientcred_filenameString = os.path.join(os.sep, cred_folderString ,'client_secrets.json')
+
+    try:
+
+        if os.path.exists(cred_filenameString):
+            creds = Credentials.from_authorized_user_file(cred_filenameString, SCOPES)
+            # If there are no (valid) credentials available, let the user log in.
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    clientcred_filenameString, SCOPES)
+                creds = flow.run_local_server(port=0)
+            # Save the credentials for the next run
+            with open(cred_filenameString, 'w') as token:
+                token.write(creds.to_json())
+
+        service = build('drive', 'v3', credentials=creds)
+        # Call the Drive v3 API
+        results = service.files().list(
+            q="mimeType = 'application/vnd.google-apps.folder'",
+            pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
+        items = results.get('files', [])
+
+        pic_id = ''
+
+        if not items:
+            print('No files found.')
+        else:
+            for item in items:
+                if item['name']=='KIOSK Picture':
+                    pic_id = item['id']
+        if pic_id != '':
+            sMachineID_ID = CreateGoogleDriveFolder(service, machineid, pic_id)
+            if sMachineID_ID != '':
+                sTodayDate_ID = CreateGoogleDriveFolder(service, testtime, sMachineID_ID)
+                if sTodayDate_ID != '':
+                    sTestLocation_ID = CreateGoogleDriveFolder(service, testlocation, sTodayDate_ID)
+                    if sTestLocation_ID != '':
+                        returnfolderid = sTestLocation_ID
+            
+    
+    except Exception as ex:
+        print(ex)
+
+    return returnfolderid
 
 def CreateGoogleDriveFolder(service, titlestring, folderid):
     returnfolderid=''
