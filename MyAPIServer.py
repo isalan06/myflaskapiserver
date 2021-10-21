@@ -6,6 +6,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.http import MediaFileUpload
+from datetime import datetime
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -140,6 +141,39 @@ def getUpdateGDImageCode(machineid):
         print(ex)
 
     return result
+
+def CreateGoogleDriveFolder(service, titlestring, folderid):
+    returnfolderid=''
+
+    bHasFolder = False
+    q_str = "mimeType = 'application/vnd.google-apps.folder' and '" + str(folderid) +"' in parents"
+    results = service.files().list(
+        q=q_str,
+        pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
+    items = results.get('files', [])
+    if not items:
+        print('No files found.')
+    else:
+        for item in items:
+            if item['name']==titlestring:
+                bHasFolder = True
+                returnfolderid = item['id']
+            print(u'{0} ({1}) - {2}'.format(item['name'], item['id'], item['parents']))
+    if bHasFolder == False:
+        try:
+            file_metadata = {
+                'name': titlestring,
+                'mimeType': 'application/vnd.google-apps.folder',
+                'parents': [str(folderid)]
+            }
+            file = service.files().create(body=file_metadata,
+                                        fields='id').execute()
+            returnfolderid = str(file.get('id'))
+            print('Folder ID: %s' % file.get('id'))
+        except Exception as ex:
+            print(ex)
+
+    return returnfolderid
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
