@@ -37,8 +37,8 @@ def main():
 
     # Call the Drive v3 API
     results = service.files().list(
-        q="mimeType = 'application/vnd.google-apps.folder'",
-        pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
+        q="mimeType = 'application/vnd.google-apps.folder' and '0ALNhV0hP-QYDUk9PVA' in parents",
+        pageSize=100, fields="nextPageToken, files(id, name, parents)").execute()
     items = results.get('files', [])
 
     pic_id = ''
