@@ -119,6 +119,7 @@ def TABF_GetGoogleDriveFolderID():
     _result_id = ''
 
     _result_id = CheckGoogleDriveFolder(_machineid, _testtime, _testlocation)
+    print(_result_id)
 
     res = {}
     if _result_id == '':
