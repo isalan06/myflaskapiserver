@@ -205,7 +205,7 @@ def CheckGoogleDriveFolder(machineid, testtime, testlocation):
         service = build('drive', 'v3', credentials=creds)
         # Call the Drive v3 API
         results = service.files().list(
-            q="mimeType = 'application/vnd.google-apps.folder'",
+            q="mimeType = 'application/vnd.google-apps.folder' and '0ALNhV0hP-QYDUk9PVA' in parents",
             pageSize=10, fields="nextPageToken, files(id, name, parents)").execute()
         items = results.get('files', [])
 
@@ -217,7 +217,7 @@ def CheckGoogleDriveFolder(machineid, testtime, testlocation):
             for item in items:
                 if item['name']=='KIOSK Picture':
                     pic_id = item['id']
-        print(pic_id)
+        #print(pic_id)
         if pic_id != '':
             sMachineID_ID = CreateGoogleDriveFolder(service, machineid, pic_id)
             if sMachineID_ID != '':
@@ -263,7 +263,7 @@ def CreateGoogleDriveFolder(service, titlestring, folderid):
             print('Folder ID: %s' % file.get('id'))
         except Exception as ex:
             print(ex)
-    print(returnfolderid)
+    #print(returnfolderid)
 
     return returnfolderid
 
