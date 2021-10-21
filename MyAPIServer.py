@@ -110,6 +110,26 @@ def GDA_UpdateRegularImage():
     res['errcode']=''
     return jsonify(res)
 
+@app.route('/TABFKIOSKAPI/GetGoogleDriveFolderID', methods=['GET'])
+def TABF_GetGoogleDriveFolderID():
+    print('Get Google Drive Folder ID')
+    _machineid = request.args['MachineID']
+    _testtime= request.args['TestTime']
+    _testlocation = request.args['TestLocation']
+    _result_id = ''
+
+    print(_machineid)
+    print(_testtime)
+    print(_testlocation)
+
+    res = {}
+    res['result']='success'
+    res['errcode']=''
+    res['folderid']=_result_id
+    
+    return jsonify(res)
+
+
 db_settings = {
     "host": "127.0.0.1",
     "port": 3306,
