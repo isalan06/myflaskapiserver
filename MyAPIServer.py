@@ -177,7 +177,7 @@ def CheckGoogleDriveFolder(machineid, testtime, testlocation):
         baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'TABFKiosk')
         if not os.path.isdir(baseFolderString):
             os.mkdir(baseFolderString)
-        machineFolderString = os.path.join(os.sep, baseFolderString, machine_id)
+        machineFolderString = os.path.join(os.sep, baseFolderString, machineid)
         if not os.path.isdir(machineFolderString):
             os.mkdir(machineFolderString)
         dateFolderString = os.path.join(os.sep, machineFolderString, testtime)
