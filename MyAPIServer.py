@@ -174,6 +174,18 @@ def CheckGoogleDriveFolder(machineid, testtime, testlocation):
     clientcred_filenameString = os.path.join(os.sep, cred_folderString ,'client_secrets.json')
 
     try:
+        baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'TABFKiosk')
+        if not os.path.isdir(baseFolderString):
+            os.mkdir(baseFolderString)
+        machineFolderString = os.path.join(os.sep, baseFolderString, machine_id)
+        if not os.path.isdir(machineFolderString):
+            os.mkdir(machineFolderString)
+        dateFolderString = os.path.join(os.sep, machineFolderString, testtime)
+        if not os.path.isdir(dateFolderString):
+            os.mkdir(dateFolderString)
+        locationFolderString = os.path.join(os.sep, dateFolderString, testlocation)
+        if not os.path.isdir(locationFolderString):
+            os.mkdir(locationFolderString)
 
         if os.path.exists(cred_filenameString):
             creds = Credentials.from_authorized_user_file(cred_filenameString, SCOPES)
