@@ -217,6 +217,7 @@ def CheckGoogleDriveFolder(machineid, testtime, testlocation):
             for item in items:
                 if item['name']=='KIOSK Picture':
                     pic_id = item['id']
+        print(pic_id)
         if pic_id != '':
             sMachineID_ID = CreateGoogleDriveFolder(service, machineid, pic_id)
             if sMachineID_ID != '':
@@ -262,6 +263,7 @@ def CreateGoogleDriveFolder(service, titlestring, folderid):
             print('Folder ID: %s' % file.get('id'))
         except Exception as ex:
             print(ex)
+    print(returnfolderid)
 
     return returnfolderid
 
