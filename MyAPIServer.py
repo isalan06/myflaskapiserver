@@ -132,6 +132,22 @@ def TABF_GetGoogleDriveFolderID():
     
     return jsonify(res)
 
+@app.route('/TABFKIOSKAPI/UpdatePersonImage', method=['POST'])
+def TABF_UpdatePersonImage():
+    print('TABF Update Person Image')
+    _machineid = request.args['MachineID']
+    _testtime= request.args['TestTime']
+    _testlocation = request.args['TestLocation']
+    _folderid = request.args['FolderID']
+    _filename = request.args['Filename']
+
+    baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'TABFKiosk', _machineid, _testtimem, _testlocation)
+    saveFileNameString = os.path.join(os.sep, baseFolderString, _filename)
+    f = request.data
+    with open(saveFileNameString, "wb") as binary_file:
+        binary_file.write(f)
+
+
 
 db_settings = {
     "host": "127.0.0.1",
