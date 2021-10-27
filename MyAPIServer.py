@@ -132,11 +132,11 @@ def TABF_GetGoogleDriveFolderID():
     
     return jsonify(res)
 
-
+'''
 @app.route('/TABFKIOSKAPI/UpdatePersonImage', method=['POST'])
 def TABF_UpdatePersonImage():
     print('TABF Update Person Image')
-'''
+
     _machineid = request.args['MachineID']
     _testtime= request.args['TestTime']
     _testlocation = request.args['TestLocation']
