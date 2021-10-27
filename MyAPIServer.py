@@ -147,6 +147,64 @@ def TABF_UpdatePersonImage():
     with open(saveFileNameString, "wb") as binary_file:
         binary_file.write(f)
 
+    
+    try:
+        cred_folderString = os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), 'tabfkioskgoogledrive')
+        cred_filenameString = os.path.join(os.sep, cred_folderString, 'token.json')
+        clientcred_filenameString = os.path.join(os.sep, cred_folderString ,'client_secrets.json')
+
+        creds = None
+
+        if os.path.exists(cred_filenameString):
+            #print("GD1")
+            creds = Credentials.from_authorized_user_file(cred_filenameString, SCOPES)
+            # If there are no (valid) credentials available, let the user log in.
+        if not creds or not creds.valid:
+            #print("GD2")
+            if creds and creds.expired and creds.refresh_token:
+                #print("GD3")
+                creds.refresh(Request())
+            else:
+                #print("GD4")
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    clientcred_filenameString, SCOPES)
+                creds = flow.run_local_server(port=0)
+            # Save the credentials for the next run
+            with open(cred_filenameString, 'w') as token:
+                token.write(creds.to_json())
+
+        service = build('drive', 'v3', credentials=creds)
+
+        folder_id = _folderid
+        file_metadata = {
+            'name': _filename,
+            'parents': [folder_id]
+        }
+
+        media = MediaFileUpload(saveFileNameString,
+                    mimetype='image/jpeg',
+                    resumable=True)
+            
+        _file = service.files().create(body=file_metadata,
+                                media_body=media,
+                                fields='id').execute()
+
+        print('Update Image To Google Drive Success')
+
+
+    except Exception as ex:
+        print(ex)
+        res2 = {}
+        res2['result']='failure'
+        res2['errcode']='Update Image To Google Drive happen error:' + str(ex)
+        return jsonify(res2)
+    
+    res = {}
+    res['result']='success'
+    res['errcode']=''
+    return jsonify(res)    
+    
+
 
 
 db_settings = {
