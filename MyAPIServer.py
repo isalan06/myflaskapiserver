@@ -147,7 +147,7 @@ def TABF_UpdatePersonImage():
     with open(saveFileNameString, "wb") as binary_file:
         binary_file.write(f)
 
-    
+    '''
     try:
         cred_folderString = os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), 'tabfkioskgoogledrive')
         cred_filenameString = os.path.join(os.sep, cred_folderString, 'token.json')
@@ -198,6 +198,7 @@ def TABF_UpdatePersonImage():
         res2['result']='failure'
         res2['errcode']='Update Image To Google Drive happen error:' + str(ex)
         return jsonify(res2)
+    '''
     
     res = {}
     res['result']='success'
