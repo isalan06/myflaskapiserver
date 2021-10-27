@@ -143,7 +143,7 @@ def TABF_UpdatePersonImage():
     _folderid = request.args['FolderID']
     _filename = request.args['Filename']
 
-    baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'TABFKiosk', _machineid, _testtimem, _testlocation)
+    baseFolderString = os.path.join(os.sep, 'D:' + os.sep, 'Data', 'TABFKiosk', _machineid, _testtime, _testlocation)
     saveFileNameString = os.path.join(os.sep, baseFolderString, _filename)
     f = request.data
     with open(saveFileNameString, "wb") as binary_file:
