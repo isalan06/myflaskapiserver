@@ -132,8 +132,8 @@ def TABF_GetGoogleDriveFolderID():
     
     return jsonify(res)
 
-'''
-@app.route('/TABFKIOSKAPI/UpdatePersonImage', method=['POST'])
+
+@app.route('/TABFKIOSKAPI/UpdatePersonImage', methods=['POST'])
 def TABF_UpdatePersonImage():
     print('TABF Update Person Image')
 
@@ -206,7 +206,7 @@ def TABF_UpdatePersonImage():
     res['result']='success'
     res['errcode']=''
     return jsonify(res)    
-'''    
+    
 
 
 
