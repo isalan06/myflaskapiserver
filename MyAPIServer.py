@@ -67,6 +67,8 @@ def GDA_DeleteFiles():
                 for file in response.get('files', []):
                     # Process change
                     print('Found file: %s (%s)' % (file.get('name'), file.get('id')))
+                    fileDelete=file.get('id')
+                    deletefile = drive_service.files().delete(fileId=fileDelete).execute()
                 page_token = response.get('nextPageToken', None)
                 if page_token is None:
                     break
