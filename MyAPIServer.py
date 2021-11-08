@@ -66,7 +66,7 @@ def GDA_DeleteFiles():
                                           pageToken=page_token).execute()
                 for file in response.get('files', []):
                     # Process change
-                    print 'Found file: %s (%s)' % (file.get('name'), file.get('id'))
+                    print('Found file: %s (%s)' % (file.get('name'), file.get('id')))
                 page_token = response.get('nextPageToken', None)
                 if page_token is None:
                     break
