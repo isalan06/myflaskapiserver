@@ -54,7 +54,7 @@ def GDA_DeleteFiles():
                 with open(cred_filenameString, 'w') as token:
                     token.write(creds.to_json())
 
-            service = build('drive', 'v3', credentials=creds)
+            drive_service = build('drive', 'v3', credentials=creds)
 
             folder_id = image_code
 
